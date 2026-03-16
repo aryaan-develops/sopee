@@ -6,7 +6,7 @@ import { authOptions } from '@/lib/auth';
 
 export async function GET(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const session: any = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
@@ -25,7 +25,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const session: any = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }

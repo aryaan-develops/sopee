@@ -7,7 +7,9 @@ import { CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import styles from './success.module.css';
 
-export default function SuccessPage() {
+import { Suspense } from 'react';
+
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const { clearCart } = useCart();
@@ -16,8 +18,6 @@ export default function SuccessPage() {
 
   useEffect(() => {
     if (sessionId) {
-      // In a real app, you'd verify the session on the server and create the order
-      // For this demo, we'll just clear the cart
       clearCart();
       setLoading(false);
     } else {
@@ -49,5 +49,13 @@ export default function SuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div className={styles.container}><Loader2 className={styles.spinner} /></div>}>
+      <SuccessContent />
+    </Suspense>
   );
 }

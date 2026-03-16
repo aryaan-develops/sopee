@@ -5,7 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../auth.module.css';
 
-export default function Register() {
+import { Suspense } from 'react';
+
+function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -110,5 +112,13 @@ export default function Register() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function Register() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegisterForm />
+    </Suspense>
   );
 }

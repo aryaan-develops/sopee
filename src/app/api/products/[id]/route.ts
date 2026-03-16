@@ -5,12 +5,12 @@ import Product from '@/models/Product';
 import { authOptions } from '@/lib/auth';
 
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
-    const session = await getServerSession(authOptions);
+    const { id } = await context.params;
+    const session: any = await getServerSession(authOptions);
     if (!session || (session.user as any).role !== 'seller') {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
@@ -33,4 +33,3 @@ export async function DELETE(
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
-// Final check for Next.js 15+ type compatibility
