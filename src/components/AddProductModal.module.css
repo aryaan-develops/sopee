@@ -38,7 +38,7 @@
 }
 
 .closeBtn:hover {
-  color: #fff;
+  color: var(--accent);
 }
 
 .error {

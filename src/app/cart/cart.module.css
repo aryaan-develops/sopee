@@ -96,7 +96,7 @@
 }
 
 .qtyBtn:hover {
-  background: var(--glass);
+  background: var(--accent);
   color: #fff;
 }
 

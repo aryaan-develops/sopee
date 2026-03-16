@@ -75,8 +75,8 @@
 }
 
 .secondaryBtn {
-  background: var(--bg-secondary);
-  color: #fff;
+  background: transparent;
+  color: var(--text-primary);
   padding: 18px 36px;
   border-radius: 14px;
   font-weight: 700;
@@ -87,7 +87,7 @@
 .secondaryBtn:hover {
   background: var(--glass);
   transform: translateY(-5px);
-  border-color: #fff;
+  border-color: var(--accent);
 }
 
 .heroStats {
@@ -277,12 +277,13 @@
 }
 
 .ctaContent {
-  background: linear-gradient(135deg, #141417 0%, #0a0a0c 100%);
+  background: linear-gradient(135deg, #1c1c1e 0%, #0a0a0c 100%);
   padding: 80px 40px;
   border-radius: 40px;
   border: 1px solid var(--glass-border);
   position: relative;
   overflow: hidden;
+  color: #fff;
 }
 
 .ctaContent::before {
@@ -299,10 +300,11 @@
 .ctaContent h2 {
   font-size: 48px;
   margin-bottom: 20px;
+  color: #fff;
 }
 
 .ctaContent p {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 18px;
   margin-bottom: 40px;
 }

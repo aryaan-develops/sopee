@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
-        <Link href="/" className={styles.logo}>
+        <Link href="/" className={`${styles.logo} gradient-text`}>
           Shopease<span className={styles.dot}>.</span>
         </Link>
 
