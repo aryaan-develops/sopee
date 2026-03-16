@@ -1,0 +1,258 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.header {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 18px;
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.orderCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+  transition: var(--transition);
+}
+
+.orderCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+  border-color: var(--accent);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.orderMeta {
+  display: flex;
+  gap: 40px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metaItem label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.metaItem span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.orderTotal {
+  color: var(--accent) !important;
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pending {
+  background: #fff8e6;
+  color: #b38200;
+}
+
+.processing {
+  background: #e6f7ff;
+  color: #0070f3;
+}
+
+.shipped {
+  background: #fff1f0;
+  color: #f5222d;
+}
+
+.delivered {
+  background: #f6ffed;
+  color: #34c759;
+}
+
+.orderItems {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.itemRow {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.itemImage {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.itemImage img {
+  object-fit: cover;
+}
+
+.itemInfo h4 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.itemInfo p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.orderFooter {
+  padding: 24px 32px;
+  background: rgba(0, 0, 0, 0.02);
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.trackBtn {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.trackBtn:hover {
+  opacity: 0.9;
+}
+
+.invoiceBtn {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.invoiceBtn:hover {
+  color: var(--accent);
+}
+
+.emptyOrders {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.emptyIcon {
+  color: var(--glass-border);
+  margin-bottom: 24px;
+}
+
+.emptyOrders h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.emptyOrders p {
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.shopBtn {
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 700;
+  display: inline-block;
+  transition: var(--transition);
+}
+
+.shopBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px var(--accent-glow);
+}
+
+.loader {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: var(--accent);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .orderHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .orderMeta {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .orderFooter {
+    justify-content: center;
+    flex-direction: column;
+  }
+}

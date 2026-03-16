@@ -1,0 +1,268 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cartItem {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  align-items: center;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 120px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1a1e;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.itemCategory {
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.itemName {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.itemFooter {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 4px;
+}
+
+.qtyBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+.qtyBtn:hover {
+  background: var(--glass);
+  color: #fff;
+}
+
+.quantity {
+  width: 40px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.removeBtn {
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+.removeBtn:hover {
+  color: var(--error);
+}
+
+.priceSection {
+  text-align: right;
+}
+
+.itemPrice {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.unitPrice {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Summary Card */
+.summaryCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 32px;
+  position: sticky;
+  top: 110px;
+}
+
+.summaryCard h3 {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.free {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--glass-border);
+  margin: 24px 0;
+}
+
+.totalPrice {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 32px;
+}
+
+.checkoutBtn {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: var(--transition);
+}
+
+.checkoutBtn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+.safeChoice {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Empty State */
+.emptyContainer {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.emptyIcon {
+  color: var(--glass-border);
+  margin-bottom: 24px;
+}
+
+.emptyContent h2 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.emptyContent p {
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.shopBtn {
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.shopBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px var(--accent-glow);
+}
+
+@media (max-width: 968px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .summaryCard {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .cartItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .imageWrapper {
+    width: 100%;
+    height: 250px;
+  }
+  
+  .priceSection {
+    text-align: left;
+    margin-top: 20px;
+    width: 100%;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 20px;
+  }
+}
