@@ -74,7 +74,7 @@
   border: 1px solid var(--glass-border);
   padding: 14px;
   border-radius: 12px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 15px;
   transition: var(--transition);
 }
@@ -121,7 +121,7 @@
   border: 1px solid var(--glass-border);
   padding: 12px;
   border-radius: 12px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -142,7 +142,7 @@
   border: 1px solid var(--glass-border);
   padding: 12px;
   border-radius: 12px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -183,7 +183,7 @@
 
 .submitBtn {
   background: var(--accent);
-  color: #000;
+  color: #fff;
   padding: 16px;
   border-radius: 14px;
   font-weight: 800;
@@ -206,4 +206,18 @@
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+  .modal {
+    padding: 24px;
+  }
+  
+  .row {
+    grid-template-columns: 1fr;
+  }
+  
+  .imageActions {
+    flex-direction: column;
+  }
 }
