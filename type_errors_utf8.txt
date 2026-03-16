@@ -1,0 +1,8 @@
+src/app/api/checkout/route.ts(37,31): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/checkout/route.ts(39,26): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/orders/route.ts(16,54): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/orders/route.ts(38,22): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/products/[id]/route.ts(14,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/products/[id]/route.ts(26,48): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/products/route.ts(32,30): error TS2339: Property 'user' does not exist on type '{}'.
+src/app/api/products/route.ts(51,24): error TS2339: Property 'user' does not exist on type '{}'.
