@@ -33,3 +33,4 @@ export async function DELETE(
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+// Final check for Next.js 15+ type compatibility
