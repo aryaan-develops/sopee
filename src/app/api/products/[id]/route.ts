@@ -4,6 +4,25 @@ import dbConnect from '@/lib/mongodb';
 import Product from '@/models/Product';
 import { authOptions } from '@/lib/auth';
 
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await context.params;
+    await dbConnect();
+    const product = await Product.findById(id).populate('seller', 'name email');
+    
+    if (!product) {
+      return NextResponse.json({ message: 'Product not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(product);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   context: { params: Promise<{ id: string }> }

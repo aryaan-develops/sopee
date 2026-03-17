@@ -65,6 +65,13 @@ export default function Home() {
           </div>
           <div className={styles.heroImageContainer}>
             <div className={styles.heroMainImage}>
+              <Image 
+                src="/hero.png" 
+                alt="Premium Fashion Showcase" 
+                fill 
+                priority 
+                className={styles.mainImg}
+              />
               <div className={styles.imageOverlay}></div>
               {/* Decorative circles */}
               <div className={styles.circle1}></div>

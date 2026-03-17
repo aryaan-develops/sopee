@@ -15,6 +15,9 @@ export async function POST(req: Request) {
     }
 
     const { items } = await req.json();
+    const host = req.headers.get('host');
+    const protocol = host?.includes('localhost') ? 'http' : 'https';
+    const origin = `${protocol}://${host}`;
 
     const lineItems = items.map((item: any) => ({
       price_data: {
@@ -32,8 +35,8 @@ export async function POST(req: Request) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${process.env.NEXTAUTH_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/cart`,
       customer_email: session.user?.email as string,
       metadata: {
         userId: (session.user as any).id,

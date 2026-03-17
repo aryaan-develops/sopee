@@ -5,13 +5,18 @@
   overflow: hidden;
   transition: var(--transition);
   position: relative;
-  group: hover;
 }
 
 .card:hover {
   transform: translateY(-8px);
   border-color: var(--accent);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .imageContainer {

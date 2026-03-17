@@ -128,6 +128,12 @@
   border-radius: 300px 300px 40px 40px;
   border: 1px solid var(--glass-border);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.mainImg {
+  object-fit: cover;
+  border-radius: 300px 300px 40px 40px;
 }
 
 .circle1 {
