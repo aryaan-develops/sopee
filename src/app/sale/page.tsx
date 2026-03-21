@@ -6,26 +6,22 @@ import { Loader2, Search, Filter, SlidersHorizontal, ChevronRight, LayoutGrid, L
 import styles from '../products/products.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function CategoryPage({ params }: { params: { category: string } }) {
+export default function SalePage() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('Newest');
-  const catName = params.category.charAt(0).toUpperCase() + params.category.slice(1);
+  const catName = "Sale";
 
   useEffect(() => {
     fetchProducts();
-  }, [params.category, sortBy]);
+  }, [sortBy]);
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/products?category=${catName === 'Sale' ? 'All' : catName}`);
+      const res = await fetch(`/api/products?category=${catName}`);
       let data = await res.json();
       
-      if (catName === 'Sale') {
-        data = data.filter((p: any) => p.price < 500); // Mock sale filtering
-      }
-
       if (sortBy === 'Price: Low to High') {
         data.sort((a: any, b: any) => a.price - b.price);
       } else if (sortBy === 'Price: High to Low') {
@@ -53,13 +49,12 @@ export default function CategoryPage({ params }: { params: { category: string } 
           <div className={styles.overlay}>
             <span className={styles.badge}>Curated Collection</span>
             <h1>{catName}</h1>
-            <p>Elevate your wardrobe with our selection of {params.category}.</p>
+            <p>Elevate your wardrobe with our selection of {catName.toLowerCase()}.</p>
           </div>
         </motion.div>
       </header>
 
       <div className={styles.mainLayout}>
-        {/* Sidebar Filters */}
         <aside className={styles.sidebar}>
           <div className={styles.sidebarSection}>
             <div className={styles.sectionTitle}>
@@ -81,7 +76,6 @@ export default function CategoryPage({ params }: { params: { category: string } 
           </div>
         </aside>
 
-        {/* Product Area */}
         <section className={styles.productArea}>
           <div className={styles.toolBar}>
             <div className={styles.toolActions}>
@@ -125,7 +119,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
                 animate={{ opacity: 1 }}
               >
                 <h3>Collection Coming Soon</h3>
-                <p>We are currently updating our curated {params.category} selection.</p>
+                <p>We are currently updating our curated {catName.toLowerCase()} selection.</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -134,3 +128,4 @@ export default function CategoryPage({ params }: { params: { category: string } 
     </div>
   );
 }
+
