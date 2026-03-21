@@ -1,40 +1,42 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ProductCard from '@/components/ProductCard';
-import { Loader2, Search, Filter, SlidersHorizontal, ChevronRight, LayoutGrid, List } from 'lucide-react';
+import { Loader2, SlidersHorizontal } from 'lucide-react';
 import styles from '../products/products.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Product } from '@/lib/types';
 
 export default function FootwearPage() {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('Newest');
   const catName = "Footwear";
 
-  useEffect(() => {
-    fetchProducts();
-  }, [sortBy]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`/api/products?category=${catName}`);
-      let data = await res.json();
+      const data = await res.json();
       
+      const filteredData = [...data];
       if (sortBy === 'Price: Low to High') {
-        data.sort((a: any, b: any) => a.price - b.price);
+        filteredData.sort((a: Product, b: Product) => a.price - b.price);
       } else if (sortBy === 'Price: High to Low') {
-        data.sort((a: any, b: any) => b.price - a.price);
+        filteredData.sort((a: Product, b: Product) => b.price - a.price);
       }
 
-      setProducts(data);
+      setProducts(filteredData);
     } catch (err) {
-      console.error('Failed to fetch products');
+      console.error('Failed to fetch products:', err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [sortBy]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const sortOptions = ['Newest', 'Price: Low to High', 'Price: High to Low', 'Best Rated'];
 
@@ -101,13 +103,13 @@ export default function FootwearPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                {products.map((product: any) => (
+                {products.map((product) => (
                   <ProductCard 
                     key={product.id || product._id} 
-                    id={product.id || product._id}
+                    id={product.id || (product._id as string)}
                     name={product.name}
                     price={product.price}
-                    image={product.image || product.images[0]}
+                    image={product.image || product.images?.[0] || ''}
                     category={product.category}
                   />
                 ))}

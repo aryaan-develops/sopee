@@ -1,42 +1,44 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { Loader2, Search, Filter, SlidersHorizontal, ChevronRight, LayoutGrid, List } from 'lucide-react';
 import styles from './products.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Product } from '@/lib/types';
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('All');
   const [search, setSearch] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('Newest');
 
-  useEffect(() => {
-    fetchProducts();
-  }, [category, search, sortBy]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`/api/products?category=${category}&search=${search}`);
-      let data = await res.json();
+      const data = await res.json();
       
+      const filteredData = [...data];
       if (sortBy === 'Price: Low to High') {
-        data.sort((a: any, b: any) => a.price - b.price);
+        filteredData.sort((a: Product, b: Product) => a.price - b.price);
       } else if (sortBy === 'Price: High to Low') {
-        data.sort((a: any, b: any) => b.price - a.price);
+        filteredData.sort((a: Product, b: Product) => b.price - a.price);
       }
 
-      setProducts(data);
+      setProducts(filteredData);
     } catch (err) {
-      console.error('Failed to fetch products');
+      console.error('Failed to fetch products:', err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [category, search, sortBy]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const categories = ['All', 'Menswear', 'Clothing', 'Footwear', 'Accessories'];
   const sortOptions = ['Newest', 'Price: Low to High', 'Price: High to Low', 'Best Rated'];
@@ -58,7 +60,6 @@ export default function ProductsPage() {
       </header>
 
       <div className={styles.mainLayout}>
-        {/* Sidebar Filters */}
         <aside className={styles.sidebar}>
           <div className={styles.sidebarSection}>
             <div className={styles.sectionTitle}>
@@ -98,7 +99,6 @@ export default function ProductsPage() {
           </div>
         </aside>
 
-        {/* Product Area */}
         <section className={styles.productArea}>
           <div className={styles.toolBar}>
             <div className={styles.searchBar}>
@@ -143,17 +143,17 @@ export default function ProductsPage() {
             ) : products.length > 0 ? (
               <motion.div 
                 layout
-                className={styles.grid}
+                className={`${styles.grid} ${styles[viewMode]}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                {products.map((product: any) => (
+                {products.map((product) => (
                   <ProductCard 
                     key={product.id || product._id} 
-                    id={product.id || product._id}
+                    id={product.id || (product._id as string)}
                     name={product.name}
                     price={product.price}
-                    image={product.image || product.images[0]}
+                    image={product.image || product.images?.[0] || ''}
                     category={product.category}
                     badge={product.price > 1000 ? 'Luxury' : ''}
                   />
@@ -166,7 +166,7 @@ export default function ProductsPage() {
                 animate={{ opacity: 1 }}
               >
                 <h3>Refine your search</h3>
-                <p>We couldn't find any styles matching those criteria.</p>
+                <p>We couldn&apos;t find any styles matching those criteria.</p>
                 <button onClick={() => { setSearch(''); setCategory('All'); }} className="btn-primary" style={{ marginTop: '2rem' }}>
                   Clear Filters
                 </button>

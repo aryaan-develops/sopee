@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingBag, ChevronRight, Star, Heart, Search, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Star, Heart } from 'lucide-react';
 import styles from './page.module.css';
 import { motion } from 'framer-motion';
 
