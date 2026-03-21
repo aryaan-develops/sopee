@@ -1,0 +1,113 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "user@gmail.com",
+      "name": "Standard User",
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "email": "seller@gmail.com",
+      "name": "Premium Seller",
+      "role": "seller"
+    },
+    {
+      "id": "3",
+      "email": "admin@gmail.com",
+      "name": "Main Admin",
+      "role": "admin"
+    },
+    {
+      "name": "jio",
+      "email": "jio@gmail.com",
+      "password": "500900",
+      "role": "buyer",
+      "id": "wk0z84t32",
+      "createdAt": "2026-03-19T18:28:50.912Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Wireless Headphones",
+      "price": 199,
+      "category": "Electronics",
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+      "sellerId": "2"
+    },
+    {
+      "id": "2",
+      "name": "Smart Watch",
+      "price": 299,
+      "category": "Electronics",
+      "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+      "sellerId": "2"
+    },
+    {
+      "id": "3",
+      "name": "Leather Backpack",
+      "price": 129,
+      "category": "Lifestyle",
+      "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800",
+      "sellerId": "2"
+    }
+  ],
+  "orders": [
+    {
+      "userId": "wk0z84t32",
+      "customerName": "jio",
+      "items": [
+        {
+          "id": "69b822689ee1c614975267ac",
+          "name": "suit",
+          "price": 300,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800",
+          "sellerId": "2"
+        },
+        {
+          "id": "2",
+          "name": "Emerald Silk Gown",
+          "price": 850,
+          "quantity": 1,
+          "image": "/products/dress.png",
+          "sellerId": "2"
+        }
+      ],
+      "totalAmount": 1150,
+      "id": "ORD-7CJDL7F8O",
+      "status": "pending",
+      "createdAt": "2026-03-19T18:29:18.673Z"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "INV-QG4KY0",
+      "orderId": "ORD-7CJDL7F8O",
+      "userId": "wk0z84t32",
+      "amount": 1150,
+      "date": "2026-03-19T18:29:18.673Z",
+      "items": [
+        {
+          "id": "69b822689ee1c614975267ac",
+          "name": "suit",
+          "price": 300,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800",
+          "sellerId": "2"
+        },
+        {
+          "id": "2",
+          "name": "Emerald Silk Gown",
+          "price": 850,
+          "quantity": 1,
+          "image": "/products/dress.png",
+          "sellerId": "2"
+        }
+      ],
+      "billingTo": "jio",
+      "status": "unpaid"
+    }
+  ]
+}

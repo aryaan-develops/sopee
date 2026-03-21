@@ -1,22 +1,15 @@
 .card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
+  background: white;
+  border-radius: 0; /* Minimalist sharp corners often look better */
   overflow: hidden;
-  transition: var(--transition);
-  position: relative;
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  border: 1px solid transparent;
+  padding: 10px;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  border-color: var(--accent);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-}
-
-.cardLink {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+  background: #fafafa;
+  border: 1px solid #eee;
 }
 
 .imageContainer {
@@ -24,90 +17,131 @@
   aspect-ratio: 4/5;
   width: 100%;
   overflow: hidden;
-  background: #1a1a1e;
+  background: #f1f1f1;
 }
 
 .image {
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .card:hover .image {
+  transform: scale(1.04);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.overlayActions {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.actionBtn {
+  width: 44px;
+  height: 44px;
+  background: #000;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.card:hover .actionBtn {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.actionBtn:hover {
+  background: #444;
   transform: scale(1.1);
 }
 
-.wishlistBtn {
+.badge {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(10, 10, 12, 0.6);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  transition: var(--transition);
-  z-index: 10;
-}
-
-.wishlistBtn:hover {
-  background: var(--accent);
-  color: #000;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: #000;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 3;
 }
 
 .content {
-  padding: 24px;
+  padding: 1.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.category {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--accent);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 8px;
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Space between name and price */
 }
 
 .name {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .price {
-  font-size: 20px;
-  font-weight: 700;
-  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  margin: 0;
 }
 
 .addBtn {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: #000;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 0;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  transition: var(--transition);
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  width: 100%;
 }
 
 .addBtn:hover {
-  background: var(--accent);
-  color: #000;
-  transform: rotate(90deg);
+  background: #444;
+}
+
+.addBtn:active {
+  transform: scale(0.98);
 }

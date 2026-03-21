@@ -1,8 +1,5 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-import dbConnect from '@/lib/mongodb';
-import User from '@/models/User';
 
 export const authOptions: any = {
   providers: [
@@ -16,23 +13,15 @@ export const authOptions: any = {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Please enter an email and password');
         }
+        const { mockDb } = await import('@/lib/mockStore');
+        const user = mockDb.getUserByEmail(credentials.email);
 
-        await dbConnect();
-
-        const user = await User.findOne({ email: credentials.email }).select('+password');
-
-        if (!user) {
-          throw new Error('No user found with this email');
-        }
-
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-
-        if (!isPasswordCorrect) {
-          throw new Error('Incorrect password');
+        if (!user || user.password !== credentials.password) {
+          throw new Error('Invalid email or password.');
         }
 
         return {
-          id: user._id.toString(),
+          id: user.id,
           email: user.email,
           name: user.name,
           role: user.role,
@@ -62,5 +51,5 @@ export const authOptions: any = {
   session: {
     strategy: 'jwt',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || 'fallback-secret-for-dev',
 };

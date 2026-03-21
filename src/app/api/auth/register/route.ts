@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import dbConnect from '@/lib/mongodb';
-import User from '@/models/User';
+import { mockDb } from '@/lib/mockStore';
 
 export async function POST(req: Request) {
   try {
@@ -11,20 +9,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
     }
 
-    await dbConnect();
-
-    const userExists = await User.findOne({ email });
+    const userExists = mockDb.getUserByEmail(email);
 
     if (userExists) {
       return NextResponse.json({ message: 'User already exists' }, { status: 400 });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    const user = await User.create({
+    // In mock storage, we'll store simple passwords for now, or just plain text
+    // for easy development. If bcrypt is needed, it would be better to keep it
+    // consistent between register and login.
+    const user = mockDb.addUser({
       name,
       email,
-      password: hashedPassword,
+      password, // Storing as is for simplified mock dev
       role,
     });
 

@@ -1,29 +1,33 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ShoppingBag, ShieldCheck, Zap, Star, ChevronRight } from 'lucide-react';
+import { ArrowRight, ShoppingBag, ShieldCheck, Zap, Star, ChevronRight, Play } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import styles from './page.module.css';
+import { motion } from 'framer-motion';
+import AnimatedSlideshow from '@/components/AnimatedSlideshow';
 
 const FEATURED_PRODUCTS = [
   {
     id: '1',
     name: 'Midnight Velvet Suit',
     price: 1200,
-    image: '/products/suit.png',
+    image: 'https://images.unsplash.com/photo-1594932224011-801047298c48?w=800',
     category: 'Menswear'
   },
   {
     id: '2',
     name: 'Emerald Silk Gown',
     price: 850,
-    image: '/products/dress.png',
+    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800',
     category: 'Womenswear'
   },
   {
     id: '3',
     name: 'Urban Tech Hoodie',
     price: 180,
-    image: '/products/hoodie.png',
+    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800',
     category: 'Streetwear'
   }
 ];
@@ -31,120 +35,133 @@ const FEATURED_PRODUCTS = [
 export default function Home() {
   return (
     <div className={styles.wrapper}>
-      {/* Hero Section */}
+      {/* Dynamic Hero Section */}
       <section className={styles.hero}>
         <div className={styles.container}>
-          <div className={styles.heroContent}>
-            <div className={styles.badge}>New Collection 2026</div>
-            <h1 className="animate-fade-in gradient-text">
-              Defining the Future <br /> of Premium Style
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Experience the pinnacle of luxury commerce. Handcrafted quality, 
-              curated by experts, delivered with excellence.
-            </p>
-            <div className={styles.heroButtons}>
-              <Link href="/products" className={styles.primaryBtn}>
-                Explore Collection <ArrowRight size={18} />
-              </Link>
-              <Link href="/auth/register?role=seller" className={styles.secondaryBtn}>
-                Launch Your Brand
-              </Link>
-            </div>
-            <div className={styles.heroStats}>
-              <div className={styles.stat}>
-                <span>50k+</span>
-                <p>Happy Customers</p>
-              </div>
-              <div className={styles.statDivider}></div>
-              <div className={styles.stat}>
-                <span>2k+</span>
-                <p>Premium Brands</p>
-              </div>
-            </div>
+          <div className={styles.heroTop}>
+             <motion.h1 
+               initial={{ opacity: 0, scale: 0.9 }}
+               animate={{ opacity: 1, scale: 1 }}
+               transition={{ duration: 1 }}
+             >
+               DIVE INTO A WORLD OF <span className={styles.accentText}>ENDLESS</span> FASHION POSSIBILITIES
+             </motion.h1>
+             <p className={styles.heroDesc}>
+               Elevate your appearance with our bespoke collections. 
+               Experience unique designs from world-class creators.
+             </p>
           </div>
-          <div className={styles.heroImageContainer}>
-            <div className={styles.heroMainImage}>
-              <Image 
-                src="/hero.png" 
-                alt="Premium Fashion Showcase" 
-                fill 
-                priority 
-                className={styles.mainImg}
-              />
-              <div className={styles.imageOverlay}></div>
-              {/* Decorative circles */}
-              <div className={styles.circle1}></div>
-              <div className={styles.circle2}></div>
-              <div className={styles.floatingTag + ' ' + styles.tagTop}>
-                <Star size={14} fill="var(--accent)" color="var(--accent)" />
-                Best Rated 2026
+
+          <div className={styles.heroGrid}>
+            <div className={styles.heroLeft}>
+              <AnimatedSlideshow />
+            </div>
+
+            <div className={styles.heroCenter}>
+              <div className={styles.heroActions}>
+                <Link href="/products" className={styles.shopNowBtn}>
+                  SHOP NOW <span>→</span>
+                </Link>
+                <Link href="/products" className={styles.exploreBtn}>
+                  EXPLORE MORE PRODUCTS
+                </Link>
               </div>
-              <div className={styles.floatingTag + ' ' + styles.tagBottom}>
-                <ShoppingBag size={14} color="var(--accent)" />
-                Authentic Only
+              <div className={styles.imageBlockHalf}>
+                <Image src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" fill alt="Fashion" className={styles.roundedImg} />
+                <div className={styles.tagFloating}>Aesthetic Collection</div>
               </div>
+            </div>
+
+            <div className={styles.heroRight}>
+               <div className={styles.imageBlock}>
+                 <Image src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800" fill alt="Fashion" className={styles.roundedImg} />
+                 <div className={styles.tagDark}>Mens Formal Set $450</div>
+               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
+      {/* Featured Collection Horizontal - Image Ref Style */}
       <section className={styles.featured}>
         <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <div>
-              <span className={styles.sectionSubtitle}>Curated Looks</span>
-              <h2 className={styles.sectionTitle}>Featured Collections</h2>
-            </div>
-            <Link href="/products" className={styles.viewAll}>
-              View All <ChevronRight size={18} />
-            </Link>
-          </div>
-          <div className={styles.productGrid}>
-            {FEATURED_PRODUCTS.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
+           <div className={styles.sectionTitleCenter}>
+              <h2>FEATURED COLLECTION</h2>
+           </div>
+
+           <div className={styles.carouselContainer}>
+              <div className={styles.carouselTrack}>
+                {FEATURED_PRODUCTS.map((p, i) => (
+                  <motion.div 
+                    key={p.id}
+                    className={styles.carouselItem}
+                    initial={{ rotate: -5 * i, x: -20 * i }}
+                    whileHover={{ rotate: 0, x: 0, scale: 1.05 }}
+                    transition={{ type: 'spring', stiffness: 200 }}
+                  >
+                    <Image src={p.image} fill alt={p.name} className={styles.roundedImg} />
+                    <div className={styles.itemMeta}>
+                      <span>{p.category}</span>
+                      <h4>{p.name}</h4>
+                      <p>${p.price}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+           </div>
+        </div>
+      </section>
+
+      {/* Mint Accent Section */}
+      <section className={styles.mintSection}>
+        <div className={styles.container}>
+          <div className={styles.mintBox}>
+             <div className={styles.mintHeader}>
+                <h2>ELEVATE YOUR WARDROBE <br /> WITH OUR FASHION FINDS</h2>
+                <p>Curate your style with pieces from around the world.</p>
+             </div>
+             <div className={styles.mintVideo}>
+               <Image src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?w=1600" fill alt="Collection" className={styles.roundedImg} />
+               <div className={styles.playIcon}><Play fill="white" /></div>
+             </div>
           </div>
         </div>
       </section>
 
-      {/* Trust Section */}
-      <section className={styles.trust}>
+      {/* Footer Info / Login Guide */}
+      <section className={styles.loginGuide}>
         <div className={styles.container}>
-          <div className={styles.trustGrid}>
-            <div className={styles.trustItem}>
-              <div className={styles.trustIcon}><Zap /></div>
-              <h3>Express Shipping</h3>
-              <p>Next-day delivery available for premium members.</p>
-            </div>
-            <div className={styles.trustItem}>
-              <div className={styles.trustIcon}><ShieldCheck /></div>
-              <h3>Buyer Protection</h3>
-              <p>100% money-back guarantee on all authentic goods.</p>
-            </div>
-            <div className={styles.trustItem}>
-              <div className={styles.trustIcon}><Star /></div>
-              <h3>Expert Curation</h3>
-              <p>Every item is verified by our style specialists.</p>
-            </div>
-          </div>
+           <p className={styles.guideSubtitle}>FASHION AT YOUR FINGERTIPS</p>
+           <div className={styles.guideGrid}>
+             <div className={styles.guideCard}>
+                <h3>1200+</h3>
+                <span>Unique Styles</span>
+             </div>
+             <div className={styles.guideCard}>
+                <h3>50k+</h3>
+                <span>Premium Quality</span>
+             </div>
+             <div className={styles.guideCard}>
+                <h3>5k+</h3>
+                <span>Custom Brands</span>
+             </div>
+           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className={styles.cta}>
+      {/* Development Credentials */}
+      <div className={styles.credentials}>
         <div className={styles.container}>
-          <div className={styles.ctaContent}>
-            <h2>Ready to Start Your Journey?</h2>
-            <p>Join the elite marketplace today and experience the difference.</p>
-            <div className={styles.ctaButtons}>
-              <Link href="/auth/register" className={styles.ctaPrimary}>Join Now</Link>
-              <Link href="/about" className={styles.ctaSecondary}>Learn More</Link>
+          <div className={styles.credBox}>
+            <h4>Mock Credentials</h4>
+            <div className={styles.credList}>
+              <span>USER: user@gmail.com | user123</span>
+              <span>SELLER: seller@gmail.com | seller123</span>
+              <span>ADMIN: admin@gmail.com | admin123</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

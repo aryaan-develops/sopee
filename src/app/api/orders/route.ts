@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import dbConnect from '@/lib/mongodb';
-import Order from '@/models/Order';
+import { mockDb } from '@/lib/mockStore';
 import { authOptions } from '@/lib/auth';
 
 export async function GET(req: Request) {
@@ -11,11 +10,17 @@ export async function GET(req: Request) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    await dbConnect();
+    const { searchParams } = new URL(req.url);
+    const sellerId = (session.user as any).role === 'seller' ? (session.user as any).id : null;
 
-    const orders = await Order.find({ user: (session.user as any).id })
-      .sort({ createdAt: -1 })
-      .populate('items.product');
+    let orders;
+    if (sellerId) {
+      orders = mockDb.getSellerOrders(sellerId);
+    } else if ((session.user as any).role === 'admin') {
+      orders = mockDb.getOrders();
+    } else {
+      orders = mockDb.getUserOrders((session.user as any).id);
+    }
 
     return NextResponse.json(orders);
   } catch (error: any) {
@@ -32,19 +37,18 @@ export async function POST(req: Request) {
 
     const { items, totalAmount } = await req.json();
 
-    await dbConnect();
-
-    const order = await Order.create({
-      user: (session.user as any).id,
+    const order = mockDb.addOrder({
+      userId: (session.user as any).id,
+      customerName: session.user.name,
       items: items.map((item: any) => ({
-        product: item.id,
+        id: item.id,
         name: item.name,
         price: item.price,
         quantity: item.quantity,
         image: item.image,
+        sellerId: item.sellerId || '2', // Fallback to main seller if not provided
       })),
       totalAmount,
-      status: 'pending',
     });
 
     return NextResponse.json(order, { status: 201 });

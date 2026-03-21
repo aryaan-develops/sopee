@@ -57,54 +57,57 @@ export default function OrdersPage() {
 
       {orders.length > 0 ? (
         <div className={styles.ordersList}>
-          {orders.map((order: any) => (
-            <div key={order._id} className={styles.orderCard}>
-              <div className={styles.orderHeader}>
-                <div className={styles.orderMeta}>
-                  <div className={styles.metaItem}>
-                    <label>Order ID</label>
-                    <span>#{order._id.substring(order._id.length - 8).toUpperCase()}</span>
-                  </div>
-                  <div className={styles.metaItem}>
-                    <label>Date Placed</label>
-                    <span>{new Date(order.createdAt).toLocaleDateString()}</span>
-                  </div>
-                  <div className={styles.metaItem}>
-                    <label>Total Amount</label>
-                    <span className={styles.orderTotal}>${order.totalAmount.toLocaleString()}</span>
-                  </div>
-                </div>
-                <div className={`${styles.statusBadge} ${styles[order.status]}`}>
-                  {order.status === 'delivered' ? <CheckCircle size={14} /> : 
-                   order.status === 'shipped' ? <Truck size={14} /> : <Clock size={14} />}
-                  {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                </div>
-              </div>
-
-              <div className={styles.orderItems}>
-                {order.items.map((item: any, idx: number) => (
-                  <div key={idx} className={styles.itemRow}>
-                    <div className={styles.itemImage}>
-                      <Image src={item.image} alt={item.name} fill />
+          {orders.map((order: any) => {
+            const orderId = order.id || order._id || '';
+            return (
+              <div key={orderId} className={styles.orderCard}>
+                <div className={styles.orderHeader}>
+                  <div className={styles.orderMeta}>
+                    <div className={styles.metaItem}>
+                      <label>Order ID</label>
+                      <span>#{orderId.substring(Math.max(0, orderId.length - 8)).toUpperCase()}</span>
                     </div>
-                    <div className={styles.itemInfo}>
-                      <h4>{item.name}</h4>
-                      <p>Qty: {item.quantity} × ${item.price.toLocaleString()}</p>
+                    <div className={styles.metaItem}>
+                      <label>Date Placed</label>
+                      <span>{new Date(order.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <div className={styles.metaItem}>
+                      <label>Total Amount</label>
+                      <span className={styles.orderTotal}>${order.totalAmount.toLocaleString()}</span>
                     </div>
                   </div>
-                ))}
-              </div>
+                  <div className={`${styles.statusBadge} ${styles[order.status]}`}>
+                    {order.status === 'delivered' ? <CheckCircle size={14} /> : 
+                     order.status === 'shipped' ? <Truck size={14} /> : <Clock size={14} />}
+                    {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                  </div>
+                </div>
 
-              <div className={styles.orderFooter}>
-                <button className={styles.trackBtn}>
-                  <Truck size={16} /> Track Order
-                </button>
-                <button className={styles.invoiceBtn}>
-                  View Invoice <ExternalLink size={14} />
-                </button>
+                <div className={styles.orderItems}>
+                  {order.items.map((item: any, idx: number) => (
+                    <div key={idx} className={styles.itemRow}>
+                      <div className={styles.itemImage}>
+                        <Image src={item.image} alt={item.name} fill />
+                      </div>
+                      <div className={styles.itemInfo}>
+                        <h4>{item.name}</h4>
+                        <p>Qty: {item.quantity} × ${item.price.toLocaleString()}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className={styles.orderFooter}>
+                  <button className={styles.trackBtn}>
+                    <Truck size={16} /> Track Order
+                  </button>
+                  <button className={styles.invoiceBtn}>
+                    View Invoice <ExternalLink size={14} />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className={styles.emptyOrders}>

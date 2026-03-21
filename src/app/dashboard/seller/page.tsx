@@ -80,6 +80,28 @@ export default function SellerDashboard() {
 
       <section className={styles.recentActivity}>
         <div className={styles.sectionHeader}>
+          <h2>Recent Orders & Invoices</h2>
+        </div>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* This would fetch from /api/orders */}
+              <OrderSummaryList sellerId={(session?.user as any).id} />
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className={styles.recentActivity}>
+        <div className={styles.sectionHeader}>
           <h2>My Products</h2>
         </div>
 
@@ -122,5 +144,37 @@ export default function SellerDashboard() {
         />
       )}
     </div>
+  );
+}
+
+function OrderSummaryList({ sellerId }: { sellerId: string }) {
+  const [orders, setOrders] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/orders')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setOrders(data);
+        }
+        setLoading(false);
+      });
+  }, [sellerId]);
+
+  if (loading) return <tr><td colSpan={4}>Loading orders...</td></tr>;
+  if (!orders || orders.length === 0) return <tr><td colSpan={4}>No orders yet</td></tr>;
+
+  return (
+    <>
+      {orders.map((o: any) => (
+        <tr key={o.id}>
+          <td>{o.id?.substring(0, 8)}</td>
+          <td>{o.items?.[0]?.name} {o.items?.length > 1 ? `+${o.items.length-1}` : ''}</td>
+          <td>${o.totalAmount}</td>
+          <td>{o.status}</td>
+        </tr>
+      ))}
+    </>
   );
 }

@@ -19,28 +19,28 @@ export default function CartPage() {
   const handleCheckout = async () => {
     try {
       setLoading(true);
-      const stripe = await stripePromise;
       
-      const res = await fetch('/api/checkout', {
+      const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: cart }),
+        body: JSON.stringify({ 
+          items: cart,
+          totalAmount: cartTotal
+        }),
       });
 
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || 'Checkout failed');
 
-      const result = await (stripe as any)?.redirectToCheckout({
-        sessionId: data.id,
-      });
+      // Success!
+      clearCart();
+      router.push('/orders');
+      router.refresh();
 
-      if (result?.error) {
-        alert(result.error.message);
-      }
     } catch (err: any) {
       console.error('Checkout error:', err);
-      alert(err.message || 'Payment service unavailable');
+      alert(err.message || 'Checkout unavailable');
     } finally {
       setLoading(false);
     }
