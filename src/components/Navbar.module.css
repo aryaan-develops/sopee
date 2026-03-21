@@ -251,3 +251,67 @@
     display: none; /* Hide Heart on mobile */
   }
 }
+
+.loginBtn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: inherit;
+  padding: 8px 18px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  margin-right: 1.5rem;
+  text-transform: uppercase;
+}
+
+.loginBtn:hover {
+  background: var(--accent-dark);
+  color: white;
+  border-color: var(--accent-dark);
+}
+
+@media (max-width: 1024px) {
+  .loginBtn {
+    display: none;
+  }
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.searchForm input {
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  padding: 0.5rem 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.searchForm button {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.mobileSearch {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.mobileSearch input {
+  width: 100%;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  outline: none;
+}

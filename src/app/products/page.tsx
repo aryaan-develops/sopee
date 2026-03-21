@@ -6,12 +6,17 @@ import { Loader2, Search, Filter, SlidersHorizontal, ChevronRight, LayoutGrid, L
 import styles from './products.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Product } from '@/lib/types';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get('search') || '';
+  const initialCategory = searchParams.get('category') || 'All';
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState('All');
-  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState(initialCategory);
+  const [search, setSearch] = useState(initialSearch);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('Newest');
 
@@ -21,7 +26,10 @@ export default function ProductsPage() {
       const res = await fetch(`/api/products?category=${category}&search=${search}`);
       const data = await res.json();
       
-      const filteredData = [...data];
+      // FIX: Ensure data is an array before spreading
+      const fetchedProducts = Array.isArray(data) ? data : [];
+      
+      const filteredData = [...fetchedProducts];
       if (sortBy === 'Price: Low to High') {
         filteredData.sort((a: Product, b: Product) => a.price - b.price);
       } else if (sortBy === 'Price: High to Low') {
@@ -31,6 +39,7 @@ export default function ProductsPage() {
       setProducts(filteredData);
     } catch (err) {
       console.error('Failed to fetch products:', err);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -39,6 +48,14 @@ export default function ProductsPage() {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  // Handle URL param changes
+  useEffect(() => {
+      const s = searchParams.get('search');
+      const c = searchParams.get('category');
+      if (s !== null) setSearch(s);
+      if (c !== null) setCategory(c);
+  }, [searchParams]);
 
   const categories = ['All', 'Menswear', 'Clothing', 'Footwear', 'Accessories'];
   const sortOptions = ['Newest', 'Price: Low to High', 'Price: High to Low', 'Best Rated'];

@@ -110,10 +110,14 @@ export default function SellerDashboard() {
         ) : products.length > 0 ? (
           <div className={styles.productsTable}>
             {products.map((product: any) => (
-              <div key={product._id} className={styles.productRow}>
+              <div key={product.id || product._id} className={styles.productRow}>
                 <div className={styles.rowInfo}>
                   <div className={styles.pImg}>
-                    <Image src={product.images[0]} alt={product.name} fill />
+                    <Image 
+                      src={product.images?.[0] || product.image || '/placeholder.png'} 
+                      alt={product.name} 
+                      fill 
+                    />
                   </div>
                   <div>
                     <h4>{product.name}</h4>
@@ -121,7 +125,7 @@ export default function SellerDashboard() {
                   </div>
                 </div>
                 <div className={styles.rowPrice}>${product.price}</div>
-                <button onClick={() => deleteProduct(product._id)} className={styles.deleteBtn}>
+                <button onClick={() => deleteProduct(product.id || product._id)} className={styles.deleteBtn}>
                   <Trash2 size={18} />
                 </button>
               </div>
@@ -129,7 +133,7 @@ export default function SellerDashboard() {
           </div>
         ) : (
           <div className={styles.emptyState}>
-            <p>You haven't added any products yet.</p>
+            <p>You haven&apos;t added any products yet.</p>
             <button className={styles.smallAddBtn} onClick={() => setShowModal(true)}>
               Create your first product
             </button>

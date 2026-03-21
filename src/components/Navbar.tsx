@@ -7,12 +7,19 @@ import { useSession, signOut } from 'next-auth/react';
 import { useCart } from '@/context/CartContext';
 import styles from './Navbar.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const { data: session } = useSession();
   const { cartCount } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +28,15 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
+      setSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -33,7 +49,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : styles.transparent}`}>
+    <nav className={`${styles.navbar} ${(isScrolled || !isHomePage) ? styles.scrolled : styles.transparent}`}>
       <div className={styles.container}>
         {/* Left: Brand Logo */}
         <Link href="/" className={styles.logo}>
@@ -41,19 +57,55 @@ export default function Navbar() {
         </Link>
 
         {/* Center: Navigation Links (Desktop) */}
-        <div className={styles.navLinks}>
-          {navLinks.map((link) => (
-            <Link key={link.name} href={link.href} className={styles.link}>
-              {link.name}
-            </Link>
-          ))}
-        </div>
+        {!searchOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={styles.navLinks}
+          >
+            {navLinks.map((link) => (
+              <Link key={link.name} href={link.href} className={styles.link}>
+                {link.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+
+        {/* Global Search Overlay (Desktop) */}
+        <AnimatePresence>
+          {searchOpen && (
+            <motion.form 
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: '40%', opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              onSubmit={handleSearch}
+              className={styles.searchForm}
+            >
+              <input 
+                autoFocus
+                type="text" 
+                placeholder="Search the archive..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="button" onClick={() => setSearchOpen(false)}>
+                <X size={18} />
+              </button>
+            </motion.form>
+          )}
+        </AnimatePresence>
 
         {/* Right: Icons & Actions */}
         <div className={styles.actions}>
-          <button className={styles.iconBtn} aria-label="Search">
-            <Search size={20} />
-          </button>
+          {!searchOpen && (
+            <button 
+              className={styles.iconBtn} 
+              aria-label="Search"
+              onClick={() => setSearchOpen(true)}
+            >
+              <Search size={20} />
+            </button>
+          )}
           
           <Link href="/wishlist" className={styles.iconBtn} aria-label="Wishlist">
             <Heart size={20} />
@@ -92,8 +144,8 @@ export default function Navbar() {
                 </div>
               </div>
             ) : (
-              <Link href="/auth/signin" className={styles.iconBtn} aria-label="Login">
-                <User size={20} />
+              <Link href="/auth/signin" className={styles.loginBtn}>
+                LOGIN
               </Link>
             )}
           </div>
@@ -130,6 +182,14 @@ export default function Navbar() {
                  <button onClick={() => setMobileMenuOpen(false)}><X size={28} /></button>
               </div>
               <div className={styles.mobileLinks}>
+                <form onSubmit={handleSearch} className={styles.mobileSearch}>
+                  <input 
+                    type="text" 
+                    placeholder="Search catalog..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </form>
                 {navLinks.map((link) => (
                   <Link 
                     key={link.name} 

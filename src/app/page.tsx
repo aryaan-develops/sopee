@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ShoppingBag, Star, Heart } from 'lucide-react';
 import styles from './page.module.css';
 import { motion } from 'framer-motion';
+import NewsletterForm from '@/components/NewsletterForm';
 
 const CATEGORIES = [
   { name: 'Casual Wear', image: 'https://images.unsplash.com/photo-1516257984877-a03aae3acbc8?w=800' },
@@ -139,17 +140,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Newsletter */}
       <section className={styles.newsletter}>
         <div className={styles.container}>
-          <div className={styles.newsletterBox}>
-            <h3>Stay Inspired</h3>
-            <p>Subscribe to our newsletter for early access to new drops and styling tips.</p>
-            <div className={styles.subscribeForm}>
-              <input type="email" placeholder="Your Email Address" />
-              <button>Subscribe</button>
-            </div>
-          </div>
+          <NewsletterForm />
         </div>
       </section>
 

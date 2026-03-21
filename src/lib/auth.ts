@@ -1,7 +1,10 @@
-import NextAuth from 'next-auth';
+import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import dbConnect from '@/lib/mongodb';
+import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 
-export const authOptions: any = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -13,15 +16,21 @@ export const authOptions: any = {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Please enter an email and password');
         }
-        const { mockDb } = await import('@/lib/mockStore');
-        const user = mockDb.getUserByEmail(credentials.email);
+        
+        await dbConnect();
+        const user = await User.findOne({ email: credentials.email }).select('+password');
+        
+        if (!user) {
+          throw new Error('No user found with this email.');
+        }
 
-        if (!user || user.password !== credentials.password) {
-          throw new Error('Invalid email or password.');
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) {
+          throw new Error('Invalid password.');
         }
 
         return {
-          id: user.id,
+          id: user._id.toString(),
           email: user.email,
           name: user.name,
           role: user.role,
@@ -39,8 +48,10 @@ export const authOptions: any = {
     },
     async session({ session, token }: { session: any, token: any }) {
       if (token) {
-        session.user.role = token.role;
-        session.user.id = token.id;
+        if (session.user) {
+          session.user.role = token.role;
+          session.user.id = token.id;
+        }
       }
       return session;
     },
@@ -51,5 +62,5 @@ export const authOptions: any = {
   session: {
     strategy: 'jwt',
   },
-  secret: process.env.NEXTAUTH_SECRET || 'fallback-secret-for-dev',
+  secret: process.env.NEXTAUTH_SECRET || 'supersecret',
 };

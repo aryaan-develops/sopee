@@ -1,39 +1,46 @@
 .authContainer {
-  min-height: calc(100vh - 70px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 20px;
+  background: var(--bg-primary);
 }
 
 .authCard {
   width: 100%;
   max-width: 450px;
   background: var(--bg-secondary);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 40px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 50px 40px;
   text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
 }
 
 .authCard h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 30px;
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
 }
 
 .error {
-  background: rgba(255, 77, 77, 0.1);
-  color: var(--error);
+  background: #fff0f0;
+  color: #ff4d4d;
   padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 14px;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  border: 1px solid #ffe6e6;
 }
 
 .form {
@@ -41,86 +48,104 @@
 }
 
 .inputGroup {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .inputGroup label {
   display: block;
-  font-size: 13px;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  margin-bottom: 0.8rem;
 }
 
 .inputGroup input {
   width: 100%;
-  background: var(--bg-primary);
-  border: 1px solid var(--glass-border);
+  background: white;
+  border: 1px solid var(--border-light);
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 4px;
   color: var(--text-primary);
-  font-size: 15px;
-  transition: var(--transition);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
 }
 
 .inputGroup input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-glow);
-}
-
-.roleSelector {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.roleSelector button {
-  padding: 12px;
-  border-radius: 10px;
-  background: var(--bg-primary);
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 14px;
-  transition: var(--transition);
-}
-
-.roleSelector .activeRole {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
+  border-color: var(--accent-dark);
+  box-shadow: 0 0 0 4px rgba(58, 52, 48, 0.05);
 }
 
 .submitBtn {
   width: 100%;
-  background: var(--accent);
-  color: #fff;
-  padding: 14px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 16px;
-  margin-top: 10px;
-  transition: var(--transition);
+  background: var(--accent-dark);
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .submitBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px var(--accent-glow);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .submitBtn:disabled {
-  opacity: 0.7;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 .footerText {
-  margin-top: 24px;
+  margin-top: 2rem;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 0.9rem;
+  font-weight: 300;
 }
 
 .footerText a {
-  color: var(--accent);
+  color: var(--text-primary);
   font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Role Selector */
+.roleSelector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.roleSelector button {
+  padding: 12px;
+  border-radius: 4px;
+  background: white;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activeRole {
+  background: var(--accent-dark) !important;
+  color: white !important;
+  border-color: var(--accent-dark) !important;
 }

@@ -7,9 +7,6 @@ import { useCart } from '@/context/CartContext';
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import styles from './cart.module.css';
-import { loadStripe } from '@stripe/stripe-js';
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, cartTotal, cartCount, clearCart } = useCart();
