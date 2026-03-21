@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import AuthProvider from "@/components/AuthProvider";
@@ -7,11 +6,9 @@ import { CartProvider } from "@/context/CartContext";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Shopease | Premium Marketplace",
-  description: "The ultimate platform for buying and selling premium goods.",
+  title: "SHOP EASE | Modern Luxury Menswear",
+  description: "Experience premium menswear curated for the modern gentleman. Shop clothing, footwear, and accessories.",
 };
 
 export default async function RootLayout({
@@ -23,13 +20,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body>
         <AuthProvider session={session}>
           <CartProvider>
             <Navbar />
-            <main style={{ paddingTop: '70px' }}>
-              {children}
-            </main>
+            {children}
           </CartProvider>
         </AuthProvider>
       </body>

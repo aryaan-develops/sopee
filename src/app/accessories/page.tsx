@@ -3,27 +3,29 @@
 import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { Loader2, Search, Filter, SlidersHorizontal, ChevronRight, LayoutGrid, List } from 'lucide-react';
-import styles from './products.module.css';
+import styles from '../products/products.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function ProductsPage() {
+export default function CategoryPage({ params }: { params: { category: string } }) {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState('All');
-  const [search, setSearch] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('Newest');
+  const catName = params.category.charAt(0).toUpperCase() + params.category.slice(1);
 
   useEffect(() => {
     fetchProducts();
-  }, [category, search, sortBy]);
+  }, [params.category, sortBy]);
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/products?category=${category}&search=${search}`);
+      const res = await fetch(`/api/products?category=${catName === 'Sale' ? 'All' : catName}`);
       let data = await res.json();
       
+      if (catName === 'Sale') {
+        data = data.filter((p: any) => p.price < 500); // Mock sale filtering
+      }
+
       if (sortBy === 'Price: Low to High') {
         data.sort((a: any, b: any) => a.price - b.price);
       } else if (sortBy === 'Price: High to Low') {
@@ -38,7 +40,6 @@ export default function ProductsPage() {
     }
   };
 
-  const categories = ['All', 'Menswear', 'Clothing', 'Footwear', 'Accessories'];
   const sortOptions = ['Newest', 'Price: Low to High', 'Price: High to Low', 'Best Rated'];
 
   return (
@@ -50,9 +51,9 @@ export default function ProductsPage() {
           className={styles.heroBanner}
         >
           <div className={styles.overlay}>
-            <span className={styles.badge}>Complete Catalog</span>
-            <h1>The Elite Collection</h1>
-            <p>Define your aesthetic with curated pieces from our workshops.</p>
+            <span className={styles.badge}>Curated Collection</span>
+            <h1>{catName}</h1>
+            <p>Elevate your wardrobe with our selection of {params.category}.</p>
           </div>
         </motion.div>
       </header>
@@ -62,25 +63,7 @@ export default function ProductsPage() {
         <aside className={styles.sidebar}>
           <div className={styles.sidebarSection}>
             <div className={styles.sectionTitle}>
-              <Filter size={16} /> Categories
-            </div>
-            <div className={styles.categoryList}>
-              {categories.map((cat) => (
-                <button 
-                  key={cat}
-                  className={`${styles.categoryItem} ${category === cat ? styles.active : ''}`}
-                  onClick={() => setCategory(cat)}
-                >
-                  {cat}
-                  <ChevronRight size={14} />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className={styles.sidebarSection}>
-            <div className={styles.sectionTitle}>
-              <SlidersHorizontal size={16} /> Sorting
+              <SlidersHorizontal size={20} /> Sorting
             </div>
             <div className={styles.sortList}>
               {sortOptions.map((opt) => (
@@ -101,31 +84,8 @@ export default function ProductsPage() {
         {/* Product Area */}
         <section className={styles.productArea}>
           <div className={styles.toolBar}>
-            <div className={styles.searchBar}>
-              <Search size={18} className={styles.searchIcon} />
-              <input 
-                type="text" 
-                placeholder="Find your style..." 
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
             <div className={styles.toolActions}>
               <span className={styles.count}>{products.length} Products found</span>
-              <div className={styles.modeToggle}>
-                <button 
-                  className={viewMode === 'grid' ? styles.active : ''}
-                  onClick={() => setViewMode('grid')}
-                >
-                  <LayoutGrid size={20} />
-                </button>
-                <button 
-                  className={viewMode === 'list' ? styles.active : ''}
-                  onClick={() => setViewMode('list')}
-                >
-                  <List size={20} />
-                </button>
-              </div>
             </div>
           </div>
 
@@ -138,7 +98,7 @@ export default function ProductsPage() {
                 exit={{ opacity: 0 }}
               >
                 <Loader2 className={styles.spinner} />
-                <span>Refining selection...</span>
+                <span>Fetching items...</span>
               </motion.div>
             ) : products.length > 0 ? (
               <motion.div 
@@ -155,7 +115,6 @@ export default function ProductsPage() {
                     price={product.price}
                     image={product.image || product.images[0]}
                     category={product.category}
-                    badge={product.price > 1000 ? 'Luxury' : ''}
                   />
                 ))}
               </motion.div>
@@ -165,11 +124,8 @@ export default function ProductsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <h3>Refine your search</h3>
-                <p>We couldn't find any styles matching those criteria.</p>
-                <button onClick={() => { setSearch(''); setCategory('All'); }} className="btn-primary" style={{ marginTop: '2rem' }}>
-                  Clear Filters
-                </button>
+                <h3>Collection Coming Soon</h3>
+                <p>We are currently updating our curated {params.category} selection.</p>
               </motion.div>
             )}
           </AnimatePresence>

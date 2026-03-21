@@ -1,148 +1,137 @@
 .container {
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 120px 40px;
-  background: #fff;
+  padding: 160px 2rem 8rem;
+  background: var(--bg-primary);
   min-height: 100vh;
 }
 
 .header {
-  margin-bottom: 80px;
+  margin-bottom: 6rem;
   text-align: center;
 }
 
 .heroBanner {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  position: relative;
+  background: var(--bg-secondary);
+  padding: 4rem;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .heroBanner h1 {
-  font-size: 60px;
-  font-weight: 800;
-  letter-spacing: -3px;
-  color: #000;
-  text-transform: uppercase;
+  font-size: 3.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
 }
 
 .heroBanner p {
-  font-size: 14px;
-  color: #888;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 300;
   max-width: 600px;
   margin: 0 auto;
 }
 
 .badge {
-  color: #000;
-  font-weight: 800;
-  padding: 0 1rem;
+  display: inline-block;
+  color: var(--accent-beige);
+  font-weight: 600;
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .mainLayout {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 80px;
+  grid-template-columns: 260px 1fr;
+  gap: 4rem;
   align-items: start;
 }
 
 .sidebar {
   position: sticky;
-  top: 100px;
+  top: 120px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
-}
-
-.sidebarSection {
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
-  border: none;
+  gap: 4rem;
 }
 
 .sectionTitle {
-  font-weight: 800;
-  font-size: 12px;
-  color: #000;
-  margin-bottom: 25px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
+  letter-spacing: 0.15em;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1rem;
 }
 
 .categoryList {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
 .categoryItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-radius: 0;
-  border: none;
+  padding: 4px 0;
   background: transparent;
-  color: #888;
-  font-size: 13px;
-  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 400;
   text-align: left;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .categoryItem:hover {
-  color: #000;
-  transform: translateX(4px);
+  color: var(--text-primary);
+  transform: translateX(5px);
 }
 
 .active {
-  color: #000 !important;
-  font-weight: 800 !important;
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
 }
 
 .sortList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
 }
 
 .sortItem {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.8rem;
   cursor: pointer;
-  color: #888;
-  font-size: 12px;
-  font-weight: 600;
-  transition: color 0.2s;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 400;
+  transition: color 0.3s;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .sortItem:hover {
-  color: #000;
+  color: var(--text-primary);
 }
 
 .sortItem input {
-  width: 14px;
-  height: 14px;
-  accent-color: #000;
+  accent-color: var(--accent-dark);
 }
 
 /* Product Area */
@@ -150,18 +139,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 50px;
-  background: transparent;
-  padding: 0 0 30px 0;
-  border-radius: 0;
-  box-shadow: none;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .searchBar {
   position: relative;
   flex: 1;
-  max-width: 300px;
+  max-width: 350px;
 }
 
 .searchIcon {
@@ -169,71 +155,44 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  color: #aaa;
+  color: var(--text-secondary);
+  opacity: 0.5;
 }
 
 .searchBar input {
   width: 100%;
   padding: 10px 10px 10px 30px;
-  border-radius: 0;
-  border: none;
-  border-bottom: 1px solid transparent;
   background: transparent;
-  font-weight: 600;
-  font-size: 13px;
-  transition: all 0.3s;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  border-bottom: 1px solid transparent;
+  transition: border 0.3s ease;
 }
 
 .searchBar input:focus {
-  outline: none;
-  border-color: #000;
+  border-bottom-color: var(--accent-dark);
 }
 
 .toolActions {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 2rem;
 }
 
 .count {
-  font-size: 11px;
-  font-weight: 800;
-  color: #bbb;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
-.modeToggle {
-  display: flex;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  gap: 15px;
-}
-
-.modeToggle button {
-  padding: 5px;
-  border: none;
-  background: transparent;
-  color: #bbb;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.modeToggle .active {
-  color: #000;
-}
-
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 50px;
-}
-
-.grid.list {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 3rem 2rem;
 }
 
 .loader {
@@ -242,44 +201,15 @@
   align-items: center;
   justify-content: center;
   min-height: 400px;
-  gap: 20px;
+  gap: 1.5rem;
+  color: var(--text-secondary);
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  color: #000;
-  animation: spin 1.2s cubic-bezier(0.19, 1, 0.22, 1) infinite;
-}
-
-.noResults {
-  text-align: center;
-  padding: 100px 0;
-}
-
-.noResults h3 {
-  font-size: 24px;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.resetBtn {
-  margin-top: 30px;
-  background: #000;
-  color: white;
-  padding: 15px 40px;
-  border-radius: 0;
-  font-weight: 800;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid #000;
-}
-
-.resetBtn:hover {
-  background: #fff;
-  color: #000;
+  width: 30px;
+  height: 30px;
+  color: var(--accent-beige);
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -289,5 +219,5 @@
 
 @media (max-width: 1024px) {
   .mainLayout { grid-template-columns: 1fr; }
-  .grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .sidebar { position: relative; top: 0; flex-direction: row; flex-wrap: wrap; }
 }

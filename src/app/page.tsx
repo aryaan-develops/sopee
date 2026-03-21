@@ -2,166 +2,165 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ShoppingBag, ShieldCheck, Zap, Star, ChevronRight, Play } from 'lucide-react';
-import ProductCard from '@/components/ProductCard';
+import { ShoppingBag, ChevronRight, Star, Heart, Search, ArrowRight } from 'lucide-react';
 import styles from './page.module.css';
 import { motion } from 'framer-motion';
-import AnimatedSlideshow from '@/components/AnimatedSlideshow';
 
-const FEATURED_PRODUCTS = [
-  {
-    id: '1',
-    name: 'Midnight Velvet Suit',
-    price: 1200,
-    image: 'https://images.unsplash.com/photo-1594932224011-801047298c48?w=800',
-    category: 'Menswear'
-  },
-  {
-    id: '2',
-    name: 'Emerald Silk Gown',
-    price: 850,
-    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800',
-    category: 'Womenswear'
-  },
-  {
-    id: '3',
-    name: 'Urban Tech Hoodie',
-    price: 180,
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800',
-    category: 'Streetwear'
-  }
+const CATEGORIES = [
+  { name: 'Casual Wear', image: 'https://images.unsplash.com/photo-1516257984877-a03aae3acbc8?w=800' },
+  { name: 'Formal Wear', image: 'https://images.unsplash.com/photo-1594932224011-801047298c48?w=800' },
+  { name: 'Street Style', image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800' },
+  { name: 'Outerwear', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800' },
+  { name: 'Accessories', image: 'https://images.unsplash.com/photo-1508747703725-719777637510?w=800' }
+];
+
+const TRENDING_PRODUCTS = [
+  { id: '1', name: 'Beige Bomber Jacket', price: 149, image: 'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800', badge: 'Trending' },
+  { id: '2', name: 'Smart Casual Blazer', price: 199, image: 'https://images.unsplash.com/photo-1507679799987-c7377ec486b0?w=800', badge: 'New' },
+  { id: '3', name: 'Knitted Polo Shirt', price: 79, image: 'https://images.unsplash.com/photo-1583912267550-d44d7a125e7e?w=800', badge: 'Sale' },
+  { id: '4', name: 'Textured Wool Coat', price: 229, image: 'https://images.unsplash.com/photo-1544022613-e87ce7526623?w=800', badge: 'Limited' }
 ];
 
 export default function Home() {
   return (
-    <div className={styles.wrapper}>
-      {/* Dynamic Hero Section */}
+    <main className={styles.main}>
+      {/* Hero Section */}
       <section className={styles.hero}>
+        <div className={styles.heroImageWrapper}>
+          <Image 
+            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1600" 
+            fill 
+            alt="Main Collection" 
+            className={styles.heroImage}
+            priority
+          />
+          <div className={styles.heroOverlay}></div>
+        </div>
+        
         <div className={styles.container}>
-          <div className={styles.heroTop}>
-             <motion.h1 
-               initial={{ opacity: 0, scale: 0.9 }}
-               animate={{ opacity: 1, scale: 1 }}
-               transition={{ duration: 1 }}
-             >
-               DIVE INTO A WORLD OF <span className={styles.accentText}>ENDLESS</span> FASHION POSSIBILITIES
-             </motion.h1>
-             <p className={styles.heroDesc}>
-               Elevate your appearance with our bespoke collections. 
-               Experience unique designs from world-class creators.
-             </p>
+          <motion.div 
+            className={styles.heroContent}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          >
+            <h1 className={styles.heroTitle}>Define Your Style</h1>
+            <p className={styles.heroSubtitle}>Modern Menswear for Every Occasion</p>
+            <div className={styles.heroActions}>
+              <Link href="/products" className="btn-primary">Shop Now</Link>
+              <Link href="/products" className="btn-outline">New Arrivals</Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Essentials Section */}
+      <section className={styles.essentials}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionTag}>Curated Sets</span>
+            <h2 className={styles.sectionTitle}>ESSENTIALS</h2>
           </div>
+          
+          <div className={styles.categoryGrid}>
+            {CATEGORIES.map((cat, i) => (
+              <motion.div 
+                key={cat.name} 
+                className={styles.categoryCard}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className={styles.catImageWrapper}>
+                  <Image src={cat.image} fill alt={cat.name} className={styles.catImage} />
+                </div>
+                <div className={styles.catName}>{cat.name}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <div className={styles.heroGrid}>
-            <div className={styles.heroLeft}>
-              <AnimatedSlideshow />
+      {/* Autumn Promotion Section */}
+      <section className={styles.promo}>
+        <div className={styles.container}>
+          <div className={styles.promoBox}>
+            <div className={styles.promoImageWrapper}>
+              <Image src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600" fill alt="Autumn Collection" className={styles.promoImg} />
             </div>
-
-            <div className={styles.heroCenter}>
-              <div className={styles.heroActions}>
-                <Link href="/products" className={styles.shopNowBtn}>
-                  SHOP NOW <span>→</span>
-                </Link>
-                <Link href="/products" className={styles.exploreBtn}>
-                  EXPLORE MORE PRODUCTS
-                </Link>
-              </div>
-              <div className={styles.imageBlockHalf}>
-                <Image src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" fill alt="Fashion" className={styles.roundedImg} />
-                <div className={styles.tagFloating}>Aesthetic Collection</div>
-              </div>
-            </div>
-
-            <div className={styles.heroRight}>
-               <div className={styles.imageBlock}>
-                 <Image src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800" fill alt="Fashion" className={styles.roundedImg} />
-                 <div className={styles.tagDark}>Mens Formal Set $450</div>
-               </div>
+            <div className={styles.promoContent}>
+              <h2 className={styles.promoTitle}>Autumn Collection — <br /> Up to 30% OFF</h2>
+              <Link href="/sale" className={styles.promoBtn}>SHOP COLLECTION</Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Collection Horizontal - Image Ref Style */}
-      <section className={styles.featured}>
+      {/* Trending Now Section */}
+      <section className={styles.trending}>
         <div className={styles.container}>
-           <div className={styles.sectionTitleCenter}>
-              <h2>FEATURED COLLECTION</h2>
-           </div>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>TRENDING NOW</h2>
+          </div>
 
-           <div className={styles.carouselContainer}>
-              <div className={styles.carouselTrack}>
-                {FEATURED_PRODUCTS.map((p, i) => (
-                  <motion.div 
-                    key={p.id}
-                    className={styles.carouselItem}
-                    initial={{ rotate: -5 * i, x: -20 * i }}
-                    whileHover={{ rotate: 0, x: 0, scale: 1.05 }}
-                    transition={{ type: 'spring', stiffness: 200 }}
-                  >
-                    <Image src={p.image} fill alt={p.name} className={styles.roundedImg} />
-                    <div className={styles.itemMeta}>
-                      <span>{p.category}</span>
-                      <h4>{p.name}</h4>
-                      <p>${p.price}</p>
+          <div className={styles.productGrid}>
+            {TRENDING_PRODUCTS.map((prod, i) => (
+              <motion.div 
+                key={prod.id} 
+                className={styles.productCard}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className={styles.prodImageWrapper}>
+                  {prod.badge && <span className={styles.badge}>{prod.badge}</span>}
+                  <Image src={prod.image} fill alt={prod.name} className={styles.prodImage} />
+                  <button className={styles.wishlistBtn}><Heart size={18} /></button>
+                  <button className={styles.quickAdd}><ShoppingBag size={18} /></button>
+                </div>
+                <div className={styles.prodMeta}>
+                  <h4 className={styles.prodName}>{prod.name}</h4>
+                  <div className={styles.prodDetails}>
+                    <p className={styles.prodPrice}>${prod.price}</p>
+                    <div className={styles.rating}>
+                      <Star size={12} fill="currentColor" />
+                      <Star size={12} fill="currentColor" />
+                      <Star size={12} fill="currentColor" />
+                      <Star size={12} fill="currentColor" />
+                      <Star size={12} fill="none" stroke="currentColor" />
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-           </div>
-        </div>
-      </section>
-
-      {/* Mint Accent Section */}
-      <section className={styles.mintSection}>
-        <div className={styles.container}>
-          <div className={styles.mintBox}>
-             <div className={styles.mintHeader}>
-                <h2>ELEVATE YOUR WARDROBE <br /> WITH OUR FASHION FINDS</h2>
-                <p>Curate your style with pieces from around the world.</p>
-             </div>
-             <div className={styles.mintVideo}>
-               <Image src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?w=1600" fill alt="Collection" className={styles.roundedImg} />
-               <div className={styles.playIcon}><Play fill="white" /></div>
-             </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer Info / Login Guide */}
-      <section className={styles.loginGuide}>
+      {/* Newsletter */}
+      <section className={styles.newsletter}>
         <div className={styles.container}>
-           <p className={styles.guideSubtitle}>FASHION AT YOUR FINGERTIPS</p>
-           <div className={styles.guideGrid}>
-             <div className={styles.guideCard}>
-                <h3>1200+</h3>
-                <span>Unique Styles</span>
-             </div>
-             <div className={styles.guideCard}>
-                <h3>50k+</h3>
-                <span>Premium Quality</span>
-             </div>
-             <div className={styles.guideCard}>
-                <h3>5k+</h3>
-                <span>Custom Brands</span>
-             </div>
-           </div>
+          <div className={styles.newsletterBox}>
+            <h3>Stay Inspired</h3>
+            <p>Subscribe to our newsletter for early access to new drops and styling tips.</p>
+            <div className={styles.subscribeForm}>
+              <input type="email" placeholder="Your Email Address" />
+              <button>Subscribe</button>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Development Credentials */}
+      {/* Footer Credentials */}
       <div className={styles.credentials}>
         <div className={styles.container}>
-          <div className={styles.credBox}>
-            <h4>Mock Credentials</h4>
-            <div className={styles.credList}>
-              <span>USER: user@gmail.com | user123</span>
-              <span>SELLER: seller@gmail.com | seller123</span>
-              <span>ADMIN: admin@gmail.com | admin123</span>
-            </div>
+          <div className={styles.credText}>
+             © 2026 SHOP EASE. ALL RIGHTS RESERVED.
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
