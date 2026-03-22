@@ -20,6 +20,26 @@ const UserSchema = new Schema({
     enum: ['buyer', 'seller', 'admin'],
     default: 'buyer',
   },
+  phone: {
+    type: String,
+    default: '',
+  },
+  addresses: [{
+    street: String,
+    city: String,
+    state: String,
+    country: String,
+    zipCode: String,
+    isDefault: {
+      type: Boolean,
+      default: false,
+    }
+  }],
+  preferredDelivery: {
+    type: String,
+    enum: ['Standard', 'Express', 'Next-Day'],
+    default: 'Standard',
+  },
   createdAt: {
     type: Date,
     default: Date.now,

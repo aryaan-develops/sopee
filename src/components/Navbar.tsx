@@ -134,6 +134,10 @@ export default function Navbar() {
                     </Link>
                   )}
 
+                  <Link href="/profile" className={styles.dropdownItem}>
+                    <User size={16} /> My Profile
+                  </Link>
+
                   <Link href="/orders" className={styles.dropdownItem}>
                     <ShoppingCart size={16} /> My Orders
                   </Link>

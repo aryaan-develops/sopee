@@ -28,8 +28,8 @@ export default function ProductCard({ id, name, price, image, category, badge, r
       viewport={{ once: true }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <Link href={`/products/${id}`} className={styles.imageLink}>
-        <div className={styles.imageContainer}>
+      <div className={styles.imageContainer}>
+        <Link href={`/products/${id}`} className={styles.imageLink}>
           {badge && <span className={styles.badge}>{badge}</span>}
           <Image 
             src={image} 
@@ -38,26 +38,27 @@ export default function ProductCard({ id, name, price, image, category, badge, r
             className={styles.image}
             sizes="(max-width: 768px) 100vw, 300px"
           />
-          <button 
-            className={styles.wishlistBtn} 
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-            aria-label="Add to wishlist"
-          >
-            <Heart size={18} />
-          </button>
-          
-          <button 
-            className={styles.quickAdd}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              addToCart({ id, name, price, image, category });
-            }}
-          >
-            <ShoppingBag size={18} /> Quick Add
-          </button>
-        </div>
-      </Link>
+        </Link>
+        
+        <button 
+          className={styles.wishlistBtn} 
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          aria-label="Add to wishlist"
+        >
+          <Heart size={18} />
+        </button>
+        
+        <button 
+          className={styles.quickAdd}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            addToCart({ id, name, price, image, category });
+          }}
+        >
+          <ShoppingBag size={18} /> Quick Add
+        </button>
+      </div>
 
       <div className={styles.content}>
         <div className={styles.mainInfo}>
